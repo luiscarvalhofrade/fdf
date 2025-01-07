@@ -30,6 +30,12 @@
 # include <stdio.h>
 # include "./mlx/mlx.h"
 
+typedef struct s_r_c
+{
+	int	rows;
+	int	cols;
+}		t_r_c;
+
 typedef struct s_data
 {
 	void	*mlx;
@@ -39,6 +45,9 @@ typedef struct s_data
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+    double  angle;
+    int     **matrix;
+    t_r_c   dims;
 }				t_data;
 
 typedef struct s_3d_pt
@@ -53,12 +62,6 @@ typedef struct s_2d_pt
 	int	x;
 	int	y;
 }	t_2d_pt;
-
-typedef struct s_r_c
-{
-	int	rows;
-	int	cols;
-}		t_r_c;
 
 typedef struct s_list
 {
@@ -78,21 +81,28 @@ typedef struct s_bre_eq
 
 char	*get_next_line(int fd);
 char	**ft_split(char const *s, char c);
-char	**ft_split(char const *s, char c);
 
 int		ft_found_new_line(t_list *list);
 int		ft_len_of_new_line(t_list *list);
-int		**convert_map_matrix(char *map);
-int		render_points(int **matrix, t_r_c dims);
+int	    render_points(int **matrix, t_r_c dims);
+int	    **create_matrix(int rows, int cols);
+int	    **convert_map_matrix(char *map);
 
 void	ft_copy_string(t_list *list, char *str);
 void	ft_free(t_list **list, t_list *clean_node, char *buffer);
-void	bresenham_line(t_data *img, t_2d_pt start, t_2d_pt end, int color);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void	line_algo(t_data *img, t_2d_pt start, t_2d_pt end, int color);
+void	draw_pt_n_ln(t_3d_pt pt3d_start, t_3d_pt pt3d_end, t_data data);
+void	draw_all_pts_n_lns(t_data data);
 
 t_list	*ft_find_last_node(t_list *list);
 
-t_2d_pt	iso_proj(t_3d_pt point);
+t_3d_pt	scale_proj(t_3d_pt point);
+
+t_2d_pt isometric_proj(t_3d_pt point);
+t_2d_pt	translate_proj(t_2d_pt point);
+t_2d_pt rotate_proj(t_2d_pt point, double angle);
+t_2d_pt	projection(t_3d_pt point, double angle);
 
 t_r_c	num_rows_and_cols(char *map);
 

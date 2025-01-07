@@ -15,8 +15,6 @@
 int	main(int argc, char **argv)
 {
 	int		**matrix;
-	int		rows;
-	int		cols;
 	t_r_c	dims;
 
 	if (argc != 2)
@@ -31,9 +29,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	dims = num_rows_and_cols(argv[1]);
-	rows = dims.rows;
-	cols = dims.cols;
-	printf("Matrix dimensions: %d rows x %d columns\n", rows, cols);
+	printf("Matrix dimensions: %d rows x %d columns\n", dims.rows, dims.cols);
 	render_points(matrix, dims);
 	return (0);
 }

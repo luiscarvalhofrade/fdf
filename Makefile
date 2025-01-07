@@ -6,7 +6,8 @@ CFLAGS = -Wall -Werror -Wextra -g -I/usr/include -Imlx -Im -O3
 
 # Source files
 SRC = fdf.c points.c utils/get_next_line.c utils/get_next_line_utils.c \
-	utils/ft_split.c read_map.c render_points.c
+	utils/ft_split.c read_map.c points_utils.c line_algo.c \
+	render_img.c win_control.c
 
 # Objects
 OBJ = $(SRC:.c=.o)
@@ -15,7 +16,7 @@ OBJ = $(SRC:.c=.o)
 NAME = fdf
 
 # Include mlx
-MLXDIR = /nfs/homes/luide-ca/common-core-github/fdf/mlx
+MLXDIR = /nfs/homes/luide-ca/common-core/fdf/mlx
 MLXLIB = $(MLXDIR)/libmlx.a
 
 # Rules
