@@ -1,10 +1,26 @@
 #ifndef FDF_H
 # define FDF_H
 
-# define NUM_CL_EVEN 0b01
-# define NUM_LN_EVEN 0b10
+# ifndef SCREEN_WIDTH
+#  define SCREEN_WIDTH 1024
+# endif
+# ifndef SCREEN_HEIGHT
+#  define SCREEN_HEIGHT 768
+# endif
 
-typedef struct	s_data {
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 5
+# endif
+
+# include <fcntl.h>
+# include <math.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include "./mlx/mlx.h"
+
+typedef struct s_data
+{
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -12,7 +28,48 @@ typedef struct	s_data {
 	int		endian;
 }				t_data;
 
-void	draw_grid(t_data img, int number_columns, int number_lines);
+typedef struct s_3d_pt
+{
+	int	x;
+	int	y;
+	int	z;
+}	t_3d_pt;
+
+typedef struct s_2d_pt
+{
+	int	x;
+	int	y;
+}	t_2d_pt;
+
+typedef struct s_r_c
+{
+	int	rows;
+	int	cols;
+}		t_r_c;
+
+typedef struct s_list
+{
+	char			*content;
+	struct s_list	*next_node;
+}					t_list;
+
+char	*get_next_line(int fd);
+char	**ft_split(char const *s, char c);
+char	**ft_split(char const *s, char c);
+
+int		ft_found_new_line(t_list *list);
+int		ft_len_of_new_line(t_list *list);
+int		**convert_map_matrix(char *map);
+
+void	ft_copy_string(t_list *list, char *str);
+void	ft_free(t_list **list, t_list *clean_node, char *buffer);
+void	bresenham_line(t_data *img, t_2d_pt start, t_2d_pt end, int color);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+
+t_list	*ft_find_last_node(t_list *list);
+
+t_2d_pt	isometric_projection(t_3d_pt point);
+
+t_r_c	num_rows_and_cols(char *map);
 
 #endif

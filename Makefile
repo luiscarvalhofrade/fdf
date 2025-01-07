@@ -2,10 +2,10 @@
 CC = cc
 
 # Flags
-CFLAGS = -Wall -Werror -Wextra -I$(MLXDIR)
+CFLAGS = -Wall -Werror -Wextra -g -I/usr/include -Imlx -Im -O3
 
 # Source files
-SRC = main.c draw_grid.c
+SRC = fdf.c points.c gnl.c gnl_utils.c ft_split.c read_map.c
 
 # Objects
 OBJ = $(SRC:.c=.o)
@@ -14,14 +14,14 @@ OBJ = $(SRC:.c=.o)
 NAME = fdf
 
 # Include mlx
-MLXDIR = /Users/luisf./Code/common-core/fdf/mlx
+MLXDIR = /nfs/homes/luide-ca/common-core-github/fdf/mlx
 MLXLIB = $(MLXDIR)/libmlx.a
 
 # Rules
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) $(MLXLIB) -framework OpenGL -framework AppKit -o $(NAME)
+	$(CC) $(OBJ) $(MLXLIB) -Lmlx -lmlx -L/usr/lib -Imlx -lXext -lX11 -lm -lz -o $(NAME)
 	@echo "Compiled $(NAME) successfully!"
 
 %.o: %.c
