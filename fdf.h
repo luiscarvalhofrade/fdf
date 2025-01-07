@@ -83,7 +83,7 @@ char	**ft_split(char const *s, char c);
 int		ft_found_new_line(t_list *list);
 int		ft_len_of_new_line(t_list *list);
 int		**convert_map_matrix(char *map);
-int		render_points(int **matrix, int rows, int cols);
+int		render_points(int **matrix, t_r_c dims);
 
 void	ft_copy_string(t_list *list, char *str);
 void	ft_free(t_list **list, t_list *clean_node, char *buffer);

@@ -34,6 +34,6 @@ int	main(int argc, char **argv)
 	rows = dims.rows;
 	cols = dims.cols;
 	printf("Matrix dimensions: %d rows x %d columns\n", rows, cols);
-	render_points(matrix, dims.rows, dims.cols);
+	render_points(matrix, dims);
 	return (0);
 }
