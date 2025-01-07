@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luide-ca <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/07 13:01:46 by luide-ca          #+#    #+#             */
+/*   Updated: 2025/01/07 13:01:48 by luide-ca         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #ifndef FDF_H
 # define FDF_H
 
@@ -53,6 +64,15 @@ typedef struct s_list
 	struct s_list	*next_node;
 }					t_list;
 
+typedef struct s_bre_eq
+{
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	err;
+	int	e2;
+}	t_bre_eq;
 char	*get_next_line(int fd);
 char	**ft_split(char const *s, char c);
 char	**ft_split(char const *s, char c);

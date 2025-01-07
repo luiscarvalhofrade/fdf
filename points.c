@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   points.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luide-ca <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/07 13:02:23 by luide-ca          #+#    #+#             */
+/*   Updated: 2025/01/07 13:02:24 by luide-ca         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 t_2d_pt	isometric_projection(t_3d_pt point)
@@ -26,39 +38,34 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 void	bresenham_line(t_data *img, t_2d_pt start, t_2d_pt end, int color)
 {
-	int	dx;
-	int	dy;
-	int	sx;
-	int	sy;
-	int	err;
-	int	e2;
+	t_bre_eq	bre_eq;
 
-	dx = abs(end.x - start.x);
-	dy = abs(end.y - start.y);
+	bre_eq.dx = abs(end.x - start.x);
+	bre_eq.dy = abs(end.y - start.y);
 	if (start.x < end.x)
-		sx = 1;
+		bre_eq.sx = 1;
 	else
-		sx = -1;
+		bre_eq.sx = -1;
 	if (start.y < end.y)
-		sy = 1;
+		bre_eq.sy = 1;
 	else
-		sy = -1;
-	err = dx - dy;
+		bre_eq.sy = -1;
+	bre_eq.err = bre_eq.dx - bre_eq.dy;
 	while (1)
 	{
 		my_mlx_pixel_put(img, start.x, start.y, color);
 		if (start.x == end.x && start.y == end.y)
 			break ;
-		e2 = 2 * err;
-		if (e2 > -dy)
+		bre_eq.e2 = 2 * bre_eq.err;
+		if (bre_eq.e2 > -bre_eq.dy)
 		{
-			err -= dy;
-			start.x += sx;
+			bre_eq.err -= bre_eq.dy;
+			start.x += bre_eq.sx;
 		}
-		if (e2 < dx)
+		if (bre_eq.e2 < bre_eq.dx)
 		{
-			err += dx;
-			start.y += sy;
+			bre_eq.err += bre_eq.dx;
+			start.y += bre_eq.sy;
 		}
 	}
 }
