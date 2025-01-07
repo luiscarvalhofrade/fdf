@@ -5,7 +5,8 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -g -I/usr/include -Imlx -Im -O3
 
 # Source files
-SRC = fdf.c points.c utils/gnl.c utils/gnl_utils.c utils/ft_split.c read_map.c
+SRC = fdf.c points.c utils/get_next_line.c utils/get_next_line_utils.c \
+	utils/ft_split.c read_map.c
 
 # Objects
 OBJ = $(SRC:.c=.o)
