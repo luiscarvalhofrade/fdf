@@ -25,7 +25,7 @@ void	free_matrix(int **matrix, int rows)
 	free(matrix);
 }
 
-void	draw_points_and_lines(int rows, int cols, int **matrix, t_data img)
+void	draw_points_and_lines(int rows, int cols, int **matrix, t_img_data img)
 {
 	int		y;
 	int		x;
@@ -67,20 +67,44 @@ void	draw_points_and_lines(int rows, int cols, int **matrix, t_data img)
 	}
 }
 
+int	handle_close(t_win_data *data)
+{
+	mlx_destroy_window(data->mlx, data->mlx_win);
+	exit(0);
+	return (0);
+}
+
+int handle_keypress(int keycode, t_win_data *data) {
+    if (keycode == 65307) {  // ESC key
+        mlx_destroy_window(data->mlx, data->mlx_win);
+        exit(0);
+    }
+    else if (keycode == 65361)  // Left arrow
+        printf("Left arrow pressed!\n");
+    else if (keycode == 65363)  // Right arrow
+        printf("Right arrow pressed!\n");
+    else if (keycode == 65362)  // Up arrow
+        printf("Up arrow pressed!\n");
+    else if (keycode == 65364)  // Down arrow
+        printf("Down arrow pressed!\n");
+    return (0);
+}
+
 int	render_points(int **matrix, int rows, int cols)
 {
-	void	*mlx;
-	void	*mlx_win;
-	t_data	img;
+	t_img_data		img;
+	t_win_data	data;
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, SC_WIDTH, SC_HEIGHT, "Isometric View");
-	img.img = mlx_new_image(mlx, SC_WIDTH, SC_HEIGHT);
+	data.mlx = mlx_init();
+	data.mlx_win = mlx_new_window(data.mlx, SC_WIDTH, SC_HEIGHT, "Iso View");
+	img.img = mlx_new_image(data.mlx, SC_WIDTH, SC_HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, \
 			&img.line_length, &img.endian);
 	draw_points_and_lines(rows, cols, matrix, img);
 	free_matrix(matrix, rows);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
+	mlx_put_image_to_window(data.mlx, data.mlx_win, img.img, 0, 0);
+	mlx_hook(data.mlx_win, 2, 1L << 0, handle_keypress, &data);
+	mlx_hook(data.mlx_win, 17, 0L, handle_close, &data);
+	mlx_loop(data.mlx);
 	return (0);
 }
