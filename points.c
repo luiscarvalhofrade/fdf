@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-t_2d_pt	isometric_projection(t_3d_pt point)
+t_2d_pt	iso_proj(t_3d_pt point)
 {
 	t_2d_pt	projected;
 
@@ -21,8 +21,8 @@ t_2d_pt	isometric_projection(t_3d_pt point)
 	point.z = point.z * 10;
 	projected.x = (int)((point.x - point.y) * cos(M_PI / 6));
 	projected.y = (int)((point.x + point.y) * sin(M_PI / 6) - point.z);
-	projected.x = projected.x + SCREEN_WIDTH / 2;
-	projected.y = projected.y + SCREEN_HEIGHT / 3;
+	projected.x = projected.x + SC_WIDTH / 2;
+	projected.y = projected.y + SC_HEIGHT / 3;
 	return (projected);
 }
 
@@ -30,7 +30,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	if (x < 0 || x >= SCREEN_WIDTH || y < 0 || y >= SCREEN_HEIGHT)
+	if (x < 0 || x >= SC_WIDTH || y < 0 || y >= SC_HEIGHT)
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
