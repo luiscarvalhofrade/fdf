@@ -31,29 +31,25 @@ int	handle_close(t_data *data)
 
 int	handle_keypress(int keycode, t_data *data)
 {
-	if (keycode == 65307)
+	if (keycode == ESC_KEY)
 	{
 		mlx_destroy_window(data->mlx, data->mlx_win);
 		exit(0);
 	}
-	else if (keycode == 65361)
+	else if (keycode == RIGHT_KEY)
 	{
 		//mlx_destroy_image(data->mlx, data->img);
 		data->angle -= 0.1; // Rotate left
         draw_all_pts_n_lns(*data);
 		mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 	}
-	else if (keycode == 65363)
+	else if (keycode == LEFT_KEY)
 	{
 		//mlx_destroy_image(data->mlx, data->img);
 		data->angle += 0.1; // Rotate right
         draw_all_pts_n_lns(*data);
 		mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 	}
-	else if (keycode == 65362)
-		printf("Up arrow pressed!\n");
-	else if (keycode == 65364)
-		printf("Down arrow pressed!\n");
 	return (0);
 }
 

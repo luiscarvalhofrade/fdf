@@ -19,6 +19,24 @@
 #  define SC_HEIGHT 768
 # endif
 
+# ifndef ESC_KEY
+#  define ESC_KEY 53
+# endif
+# ifndef RIGHT_KEY
+#  define RIGHT_KEY 124
+# endif
+# ifndef LEFT_KEY
+#  define LEFT_KEY 123
+# endif
+// # ifndef ESC_KEY
+// #  define ESC_KEY 65307
+// # endif
+// # ifndef RIGHT_KEY
+// #  define RIGHT_KEY 65363
+// # endif
+// # ifndef LEFT_KEY
+// #  define LEFT_KEY 65361
+// # endif
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 5
 # endif
