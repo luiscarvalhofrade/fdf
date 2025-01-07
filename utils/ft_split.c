@@ -1,4 +1,4 @@
-#include "fdf.h"
+#include "../fdf.h"
 
 int	ft_count_items(const char *s, char c)
 {

@@ -1,4 +1,4 @@
-#include "fdf.h"
+#include "../fdf.h"
 
 void	ft_reorg_lst(t_list **lst)
 {
