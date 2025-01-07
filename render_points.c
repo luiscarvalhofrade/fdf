@@ -25,7 +25,7 @@ void	free_matrix(int **matrix, int rows)
 	free(matrix);
 }
 
-void	draw_points_and_lines(int rows, int cols, int **matrix, t_img_data img)
+void	draw_points_and_lines(int rows, int cols, int **matrix, t_data img)
 {
 	int		y;
 	int		x;
@@ -67,14 +67,14 @@ void	draw_points_and_lines(int rows, int cols, int **matrix, t_img_data img)
 	}
 }
 
-int	handle_close(t_win_data *data)
+int	handle_close(t_data *data)
 {
 	mlx_destroy_window(data->mlx, data->mlx_win);
 	exit(0);
 	return (0);
 }
 
-int handle_keypress(int keycode, t_win_data *data) {
+int handle_keypress(int keycode, t_data *data) {
     if (keycode == 65307) {  // ESC key
         mlx_destroy_window(data->mlx, data->mlx_win);
         exit(0);
@@ -92,17 +92,16 @@ int handle_keypress(int keycode, t_win_data *data) {
 
 int	render_points(int **matrix, int rows, int cols)
 {
-	t_img_data		img;
-	t_win_data	data;
+	t_data	data;
 
 	data.mlx = mlx_init();
 	data.mlx_win = mlx_new_window(data.mlx, SC_WIDTH, SC_HEIGHT, "Iso View");
-	img.img = mlx_new_image(data.mlx, SC_WIDTH, SC_HEIGHT);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, \
-			&img.line_length, &img.endian);
-	draw_points_and_lines(rows, cols, matrix, img);
+	data.img = mlx_new_image(data.mlx, SC_WIDTH, SC_HEIGHT);
+	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel, \
+			&data.line_length, &data.endian);
+	draw_points_and_lines(rows, cols, matrix, data);
 	free_matrix(matrix, rows);
-	mlx_put_image_to_window(data.mlx, data.mlx_win, img.img, 0, 0);
+	mlx_put_image_to_window(data.mlx, data.mlx_win, data.img, 0, 0);
 	mlx_hook(data.mlx_win, 2, 1L << 0, handle_keypress, &data);
 	mlx_hook(data.mlx_win, 17, 0L, handle_close, &data);
 	mlx_loop(data.mlx);

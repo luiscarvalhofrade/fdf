@@ -30,20 +30,16 @@
 # include <stdio.h>
 # include "./mlx/mlx.h"
 
-typedef struct s_win_data
+typedef struct s_data
 {
 	void	*mlx;
 	void	*mlx_win;
-}			t_win_data;
-
-typedef struct s_img_data
-{
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}				t_img_data;
+}				t_data;
 
 typedef struct s_3d_pt
 {
@@ -91,8 +87,8 @@ int		render_points(int **matrix, int rows, int cols);
 
 void	ft_copy_string(t_list *list, char *str);
 void	ft_free(t_list **list, t_list *clean_node, char *buffer);
-void	bresenham_line(t_img_data *img, t_2d_pt start, t_2d_pt end, int color);
-void	my_mlx_pixel_put(t_img_data *data, int x, int y, int color);
+void	bresenham_line(t_data *img, t_2d_pt start, t_2d_pt end, int color);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 t_list	*ft_find_last_node(t_list *list);
 

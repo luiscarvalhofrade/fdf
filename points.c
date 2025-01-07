@@ -26,7 +26,7 @@ t_2d_pt	iso_proj(t_3d_pt point)
 	return (projected);
 }
 
-void	my_mlx_pixel_put(t_img_data *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
@@ -36,7 +36,7 @@ void	my_mlx_pixel_put(t_img_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	bresenham_line(t_img_data *img, t_2d_pt start, t_2d_pt end, int color)
+void	bresenham_line(t_data *img, t_2d_pt start, t_2d_pt end, int color)
 {
 	t_bre_eq	bre_eq;
 
