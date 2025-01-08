@@ -12,6 +12,12 @@
 
 #include "fdf.h"
 
+void	free_split_n_line(t_read_map infos)
+{
+	ft_free_split(infos.result, infos.cols);
+	free(infos.line);
+}
+
 void	free_matrix(int **matrix, int size)
 {
 	int	i;
@@ -41,6 +47,7 @@ t_r_c	num_rows_and_cols(char *map)
 	{
 		dims.cols = ft_count_items(line, ' ');
 		dims.rows++;
+		free(line);
 		line = get_next_line(fd);
 	}
 	free(line);
@@ -96,7 +103,7 @@ int	**convert_map_matrix(char *map)
 			map_3d[infos.rows][infos.cols] = ft_atoi(infos.result[infos.cols]);
 			infos.cols++;
 		}
-		free(infos.result);
+		free_split_n_line(infos);
 		infos.line = get_next_line(infos.fd);
 		infos.rows++;
 	}

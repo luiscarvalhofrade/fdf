@@ -73,7 +73,7 @@ static char	*ft_allocate_word(const char *s, char c)
 	return (word);
 }
 
-static char	**ft_free_split(char **result, int i)
+char	**ft_free_split(char **result, int i)
 {
 	while (i > 0)
 		free(result[--i]);

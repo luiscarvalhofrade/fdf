@@ -126,6 +126,7 @@ typedef struct s_bre_eq
 }	t_bre_eq;
 
 char	*get_next_line(int fd);
+char	**ft_free_split(char **result, int i);
 char	**ft_split(char const *s, char c);
 
 int		ft_found_new_line(t_list *list);

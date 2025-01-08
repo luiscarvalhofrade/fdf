@@ -30,6 +30,5 @@ int	main(int argc, char **argv)
 	}
 	dims = num_rows_and_cols(argv[1]);
 	render_points(matrix, dims);
-	free_matrix(matrix, dims.rows);
 	return (0);
 }
