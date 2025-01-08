@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-void	line_algo(t_data *img, t_2d_pt start, t_2d_pt end, int color)
+t_bre_eq	define_sx_sy(t_2d_pt start, t_2d_pt end)
 {
 	t_bre_eq	bre_eq;
 
@@ -26,6 +26,14 @@ void	line_algo(t_data *img, t_2d_pt start, t_2d_pt end, int color)
 		bre_eq.sy = 1;
 	else
 		bre_eq.sy = -1;
+	return (bre_eq);
+}
+
+void	line_algo(t_data *img, t_2d_pt start, t_2d_pt end, int color)
+{
+	t_bre_eq	bre_eq;
+
+	bre_eq = define_sx_sy(start, end);
 	bre_eq.err = bre_eq.dx - bre_eq.dy;
 	while (1)
 	{
@@ -45,4 +53,3 @@ void	line_algo(t_data *img, t_2d_pt start, t_2d_pt end, int color)
 		}
 	}
 }
-

@@ -24,10 +24,35 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 int	handle_close(t_data *data)
 {
-	mlx_destroy_window(data->mlx, data->mlx_win);
-    mlx_destroy_image(data->mlx, data->img); // Destroy image before exiting
-    free(data);
+	if (data->img)
+		mlx_destroy_image(data->mlx, data->img);
+	if (data->mlx_win)
+		mlx_destroy_window(data->mlx, data->mlx_win);
+	if (data->matrix)
+		free_matrix(data->matrix, data->dims.rows);
+	if (data->mlx)
+	{
+		free(data->mlx);
+	}
 	exit(0);
+	return (0);
+}
+
+int	handle_esc_keypress(int keycode, t_data *data)
+{
+	if (keycode == ESC_KEY)
+	{
+		if (data->img)
+			mlx_destroy_image(data->mlx, data->img);
+		if (data->mlx_win)
+			mlx_destroy_window(data->mlx, data->mlx_win);
+		if (data->matrix)
+			free_matrix(data->matrix, data->dims.rows);
+		if (data->mlx)
+		{
+			free(data->mlx);
+		}
+	}
 	return (0);
 }
 
@@ -35,33 +60,23 @@ int	handle_keypress(int keycode, t_data *data)
 {
 	if (keycode == ESC_KEY)
 	{
-		mlx_destroy_window(data->mlx, data->mlx_win);
+		handle_esc_keypress(keycode, data);
 		exit(0);
+		return (0);
 	}
 	else if (keycode == RIGHT_KEY)
-	{
-		data->angle_y -= 0.1; // Rotate left
-	}
+		data->angle_y -= 0.1;
 	else if (keycode == LEFT_KEY)
-	{
-		data->angle_y += 0.1; // Rotate right
-	}
+		data->angle_y += 0.1;
 	else if (keycode == UP_KEY)
-	{
-		data->angle_x += 0.1; // Rotate left
-	}
+		data->angle_x += 0.1;
 	else if (keycode == DOWN_KEY)
-	{
-		data->angle_x -= 0.1; // Rotate right
-	}
+		data->angle_x -= 0.1;
 	data->img = mlx_new_image(data->mlx, SC_WIDTH, SC_HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
 			&data->line_length, &data->endian);
-    // Redraw the scene with the new angle
-    draw_all_pts_n_lns(*data); 
-
-    // Update the window with the new image
-    mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
+	draw_all_pts_n_lns(*data);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 	return (0);
 }
 
@@ -79,7 +94,6 @@ int	render_points(int **matrix, t_r_c dims)
 	data.matrix = matrix;
 	data.dims = dims;
 	draw_all_pts_n_lns(data);
-	//free_matrix(matrix, dims.rows);
 	mlx_put_image_to_window(data.mlx, data.mlx_win, data.img, 0, 0);
 	mlx_hook(data.mlx_win, 2, 1L << 0, handle_keypress, &data);
 	mlx_hook(data.mlx_win, 17, 0L, handle_close, &data);

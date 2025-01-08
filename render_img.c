@@ -22,12 +22,41 @@ void	draw_pt_n_ln(t_3d_pt pt3d_start, t_3d_pt pt3d_end, t_data data)
 	line_algo(&data, start, end, 0x00FF0000);
 }
 
+t_3d_pt	define_start_pt(int x, int y, t_data data)
+{
+	t_3d_pt	point3d_start;
+
+	point3d_start.x = x;
+	point3d_start.y = y;
+	point3d_start.z = data.matrix[y][x];
+	return (point3d_start);
+}
+
+t_3d_pt	define_end_pt_x(int x, int y, t_data data)
+{
+	t_3d_pt	point3d_end;
+
+	point3d_end.x = x + 1;
+	point3d_end.y = y;
+	point3d_end.z = data.matrix[y][x + 1];
+	return (point3d_end);
+}
+
+t_3d_pt	define_end_pt_y(int x, int y, t_data data)
+{
+	t_3d_pt	point3d_end;
+
+	point3d_end.x = x;
+	point3d_end.y = y + 1;
+	point3d_end.z = data.matrix[y + 1][x];
+	return (point3d_end);
+}
+
 void	draw_all_pts_n_lns(t_data data)
 {
-	int		y;
-	int		x;
-	t_3d_pt	point3d_start;
-	t_3d_pt	point3d_end;
+	int			y;
+	int			x;
+	t_st_en_pts	pts;
 
 	y = 0;
 	while (y < data.dims.rows)
@@ -35,22 +64,16 @@ void	draw_all_pts_n_lns(t_data data)
 		x = 0;
 		while (x < data.dims.cols)
 		{
-			point3d_start.x = x;
-			point3d_start.y = y;
-			point3d_start.z = data.matrix[y][x];
+			pts.point3d_start = define_start_pt(x, y, data);
 			if (x + 1 < data.dims.cols)
 			{
-				point3d_end.x = x + 1;
-				point3d_end.y = y;
-				point3d_end.z = data.matrix[y][x + 1];
-				draw_pt_n_ln(point3d_start, point3d_end, data);
+				pts.point3d_end = define_end_pt_x(x, y, data);
+				draw_pt_n_ln(pts.point3d_start, pts.point3d_end, data);
 			}
 			if (y + 1 < data.dims.rows)
 			{
-				point3d_end.x = x;
-				point3d_end.y = y + 1;
-				point3d_end.z = data.matrix[y + 1][x];
-				draw_pt_n_ln(point3d_start, point3d_end, data);
+				pts.point3d_end = define_end_pt_y(x, y, data);
+				draw_pt_n_ln(pts.point3d_start, pts.point3d_end, data);
 			}
 			x++;
 		}

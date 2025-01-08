@@ -12,54 +12,58 @@
 
 #include "fdf.h"
 
+void	free_matrix(int **matrix, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		free(matrix[i]);
+		i++;
+	}
+	free(matrix);
+}
+
 t_r_c	num_rows_and_cols(char *map)
 {
 	int		fd;
-	int		i_row;
-	int		i_col;
 	char	*line;
-	char	**result;
-	t_r_c	rows_and_cols;
+	t_r_c	dims;
 
-	rows_and_cols.rows = 0;
-	rows_and_cols.cols = 0;
+	dims.rows = 0;
+	dims.cols = 0;
 	fd = open(map, O_RDONLY);
 	if (fd == -1)
-		return (rows_and_cols);
-	i_row = 0;
+		return (dims);
 	line = get_next_line(fd);
 	while (line)
 	{
-		result = ft_split(line, ' ');
-		if (i_row == 0)
-		{
-			i_col = 0;
-			while (result[i_col])
-				i_col++;
-			rows_and_cols.cols = i_col;
-		}
-		i_row++;
-		free(result);
+		dims.cols = ft_count_items(line, ' ');
+		dims.rows++;
 		line = get_next_line(fd);
 	}
 	free(line);
-	rows_and_cols.rows = i_row;
 	close(fd);
-	return (rows_and_cols);
+	return (dims);
 }
 
-int	**create_matrix(int rows, int cols)
+int	**create_matrix(char *map)
 {
-	int	**matrix;
-	int	i;
+	int				**matrix;
+	int				i;
+	t_r_c			dims;
 
-	matrix = (int **)malloc(rows * sizeof(int *));
+	dims = num_rows_and_cols(map);
+	if (dims.rows == 0 || dims.cols == 0)
+		return (NULL);
+	matrix = (int **)malloc(dims.rows * sizeof(int *));
 	if (!matrix)
 		return (NULL);
 	i = 0;
-	while (i < rows)
+	while (i < dims.rows)
 	{
-		matrix[i] = (int *)malloc(cols * sizeof(int));
+		matrix[i] = (int *)malloc(dims.cols * sizeof(int));
 		if (!matrix[i])
 		{
 			while (--i >= 0)
@@ -74,39 +78,29 @@ int	**create_matrix(int rows, int cols)
 
 int	**convert_map_matrix(char *map)
 {
-	int		fd;
-	int		i_row;
-	int		i_col;
-	int		**map_3d;
-	char	*line;
-	char	**result;
-	t_r_c	dims;
+	int				**map_3d;
+	t_read_map		infos;
 
-	dims = num_rows_and_cols(map);
-	if (dims.rows == 0 || dims.cols == 0)
+	map_3d = create_matrix(map);
+	infos.fd = open(map, O_RDONLY);
+	if (infos.fd == -1)
 		return (NULL);
-	map_3d = create_matrix(dims.rows, dims.cols);
-	if (!map_3d)
-		return (NULL);
-	fd = open(map, O_RDONLY);
-	if (fd == -1)
-		return (NULL);
-	i_row = 0;
-	line = get_next_line(fd);
-	while (line)
+	infos.rows = 0;
+	infos.line = get_next_line(infos.fd);
+	while (infos.line)
 	{
-		result = ft_split(line, ' ');
-		i_col = 0;
-		while (result[i_col])
+		infos.result = ft_split(infos.line, ' ');
+		infos.cols = 0;
+		while (infos.result[infos.cols])
 		{
-			map_3d[i_row][i_col] = atoi(result[i_col]);
-			i_col++;
+			map_3d[infos.rows][infos.cols] = atoi(infos.result[infos.cols]);
+			infos.cols++;
 		}
-		free(result);
-		line = get_next_line(fd);
-		i_row++;
+		free(infos.result);
+		infos.line = get_next_line(infos.fd);
+		infos.rows++;
 	}
-	free(line);
-	close(fd);
+	free(infos.line);
+	close(infos.fd);
 	return (map_3d);
 }

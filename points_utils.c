@@ -12,25 +12,22 @@
 
 #include "fdf.h"
 
-t_3d_pt rotate_proj_x(t_3d_pt point, double angle)
+t_3d_pt	rotate_proj_x(t_3d_pt point, double angle)
 {
-	double temp_y;
-    double temp_z;
-    // Apply rotation 
-     // Store intermediate values to avoid overwriting
-    temp_y = point.y * cos(angle) - point.z * sin(angle);
-    temp_z = point.y * sin(angle) + point.z * cos(angle);
+	double	temp_y;
+	double	temp_z;
 
-    // Assign updated values
-    point.y = temp_y;
-    point.z = temp_z;
+	temp_y = point.y * cos(angle) - point.z * sin(angle);
+	temp_z = point.y * sin(angle) + point.z * cos(angle);
+	point.y = temp_y;
+	point.z = temp_z;
 	return (point);
 }
 
 t_3d_pt	scale_proj(t_3d_pt point)
 {
 	int	scale;
-	/* create a logic that scale the img in the middle of the screen*/
+
 	scale = 10;
 	point.x = point.x * scale;
 	point.y = point.y * scale;
@@ -38,7 +35,7 @@ t_3d_pt	scale_proj(t_3d_pt point)
 	return (point);
 }
 
-t_2d_pt isometric_proj(t_3d_pt point)
+t_2d_pt	isometric_proj(t_3d_pt point)
 {
 	t_2d_pt	projected;
 
@@ -51,8 +48,7 @@ t_2d_pt	translate_proj(t_2d_pt point)
 {
 	int	width_factor;
 	int	height_factor;
-	/* create a logic that centralize the img in 
-		the middle of the screen using dims*/
+
 	width_factor = 2;
 	height_factor = 3;
 	point.x = point.x + SC_WIDTH / width_factor;
@@ -60,7 +56,7 @@ t_2d_pt	translate_proj(t_2d_pt point)
 	return (point);
 }
 
-t_2d_pt rotate_proj_y(t_2d_pt point, double angle)
+t_2d_pt	rotate_proj_y(t_2d_pt point, double angle)
 {
 	int	dx;
 	int	dy;

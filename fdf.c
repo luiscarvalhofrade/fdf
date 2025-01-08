@@ -29,7 +29,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	dims = num_rows_and_cols(argv[1]);
-	printf("Matrix dimensions: %d rows x %d columns\n", dims.rows, dims.cols);
 	render_points(matrix, dims);
+	free_matrix(matrix, dims.rows);
 	return (0);
 }
