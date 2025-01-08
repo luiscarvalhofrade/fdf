@@ -24,6 +24,12 @@ t_3d_pt	rotate_proj_x(t_3d_pt point, t_data data)
 	return (point);
 }
 
+t_3d_pt	bonus_descale_z(t_3d_pt point, t_data data)
+{
+	point.z = point.z * data.z_value;
+	return (point);
+}
+
 t_3d_pt	scale_proj(t_3d_pt point, t_data data)
 {
 	point.x = point.x * data.scale;

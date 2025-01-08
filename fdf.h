@@ -67,6 +67,12 @@
 # ifndef F6_KEY
 #  define F6_KEY 65475
 # endif
+# ifndef F7_KEY
+#  define F7_KEY 65476
+# endif
+# ifndef F8_KEY
+#  define F8_KEY 65477
+# endif
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 5
 # endif
@@ -106,6 +112,7 @@ typedef struct s_data
 	double	angle_y;
 	int		**matrix;
 	int		scale;
+	double	z_value;
 	double	width_factor;
 	double	height_factor;
 	t_r_c	dims;
@@ -160,6 +167,7 @@ int		handle_scale(int keycode, t_data *data);
 int		hanle_rotation(int keycode, t_data *data);
 int		handle_translate_width(int keycode, t_data *data);
 int		handle_translate_height(int keycode, t_data *data);
+int		handle_descale_z(int keycode, t_data *data);
 int		**create_matrix(char *map);
 int		**convert_map_matrix(char *map);
 
@@ -175,6 +183,7 @@ t_list	*ft_find_last_node(t_list *list);
 
 t_3d_pt	rotate_proj_x(t_3d_pt point, t_data data);
 t_3d_pt	scale_proj(t_3d_pt point, t_data data);
+t_3d_pt	bonus_descale_z(t_3d_pt point, t_data data);
 
 t_2d_pt	isometric_proj(t_3d_pt point);
 t_2d_pt	translate_proj(t_2d_pt point, t_data data);

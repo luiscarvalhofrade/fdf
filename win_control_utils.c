@@ -23,7 +23,7 @@ int	handle_esc_keypress(int keycode, t_data *data)
 		if (data->matrix)
 			free_matrix(data->matrix, data->dims.rows);
 		if (data->mlx)
-			free(data->mlx);
+			mlx_destroy_display(data->mlx);
 	}
 	return (0);
 }
@@ -86,6 +86,22 @@ int	hanle_rotation(int keycode, t_data *data)
 		data->angle_x += 0.1;
 	else if (keycode == DOWN_KEY)
 		data->angle_x -= 0.1;
+	if (data->img)
+			mlx_destroy_image(data->mlx, data->img);
+	data->img = mlx_new_image(data->mlx, SC_WIDTH, SC_HEIGHT);
+	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
+			&data->line_length, &data->endian);
+	draw_all_pts_n_lns(*data);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
+	return (0);
+}
+
+int	handle_descale_z(int keycode, t_data *data)
+{
+	if (keycode == F7_KEY)
+		data->z_value -= 0.1;
+	else if (keycode == F8_KEY)
+		data->z_value += 0.1;
 	if (data->img)
 			mlx_destroy_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, SC_WIDTH, SC_HEIGHT);

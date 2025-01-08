@@ -32,7 +32,7 @@ int	handle_close(t_data *data)
 		free_matrix(data->matrix, data->dims.rows);
 	if (data->mlx)
 	{
-		free(data->mlx);
+		mlx_destroy_display(data->mlx);
 	}
 	exit(0);
 	return (0);
@@ -56,6 +56,8 @@ int	handle_keypress(int keycode, t_data *data)
 		handle_translate_width(keycode, data);
 	else if (keycode == F5_KEY || keycode == F6_KEY)
 		handle_translate_height(keycode, data);
+	else if (keycode == F7_KEY || keycode == F8_KEY)
+		handle_descale_z(keycode, data);
 	return (0);
 }
 
@@ -73,6 +75,7 @@ int	render_points(int **matrix, t_r_c dims)
 	data.scale = 10;
 	data.width_factor = 2;
 	data.height_factor = 3.0;
+	data.z_value = 1.0;
 	data.matrix = matrix;
 	data.dims = dims;
 	draw_all_pts_n_lns(data);

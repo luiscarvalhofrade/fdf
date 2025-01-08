@@ -16,6 +16,7 @@ t_2d_pt	projection(t_3d_pt point, t_data data)
 {
 	t_2d_pt	converted;
 
+	point = bonus_descale_z(point, data);
 	point = rotate_proj_x(point, data);
 	point = scale_proj(point, data);
 	converted = isometric_proj(point);
