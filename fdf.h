@@ -132,6 +132,7 @@ int		ft_found_new_line(t_list *list);
 int		ft_len_of_new_line(t_list *list);
 int		render_points(int **matrix, t_r_c dims);
 int		ft_count_items(const char *s, char c);
+int		ft_atoi(const char *nptr);
 int		**create_matrix(char *map);
 int		**convert_map_matrix(char *map);
 

@@ -49,9 +49,7 @@ int	handle_esc_keypress(int keycode, t_data *data)
 		if (data->matrix)
 			free_matrix(data->matrix, data->dims.rows);
 		if (data->mlx)
-		{
 			free(data->mlx);
-		}
 	}
 	return (0);
 }

@@ -93,7 +93,7 @@ int	**convert_map_matrix(char *map)
 		infos.cols = 0;
 		while (infos.result[infos.cols])
 		{
-			map_3d[infos.rows][infos.cols] = atoi(infos.result[infos.cols]);
+			map_3d[infos.rows][infos.cols] = ft_atoi(infos.result[infos.cols]);
 			infos.cols++;
 		}
 		free(infos.result);
