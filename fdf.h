@@ -78,20 +78,20 @@
 # include <stdio.h>
 # include "./mlx/mlx.h"
 
-typedef struct s_read_map
-{
-	int		rows;
-	int		cols;
-	int		fd;
-	char	*line;
-	char	**result;
-}			t_read_map;
-
 typedef struct s_r_c
 {
 	int	rows;
 	int	cols;
 }		t_r_c;
+
+typedef struct s_read_map
+{
+	t_r_c	d;
+	int		fd;
+	char	*line;
+	char	**result;
+}			t_read_map;
+
 
 typedef struct s_data
 {

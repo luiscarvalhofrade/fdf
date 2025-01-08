@@ -14,7 +14,7 @@
 
 void	free_split_n_line(t_read_map infos)
 {
-	ft_free_split(infos.result, infos.cols);
+	ft_free_split(infos.result, infos.d.cols);
 	free(infos.line);
 }
 
@@ -86,28 +86,28 @@ int	**create_matrix(char *map)
 int	**convert_map_matrix(char *map)
 {
 	int				**map_3d;
-	t_read_map		infos;
+	t_read_map		ifs;
 
 	map_3d = create_matrix(map);
-	infos.fd = open(map, O_RDONLY);
-	if (infos.fd == -1)
+	ifs.fd = open(map, O_RDONLY);
+	if (ifs.fd == -1)
 		return (NULL);
-	infos.rows = 0;
-	infos.line = get_next_line(infos.fd);
-	while (infos.line)
+	ifs.d.rows = 0;
+	ifs.line = get_next_line(ifs.fd);
+	while (ifs.line)
 	{
-		infos.result = ft_split(infos.line, ' ');
-		infos.cols = 0;
-		while (infos.result[infos.cols])
+		ifs.result = ft_split(ifs.line, ' ');
+		ifs.d.cols = 0;
+		while (ifs.result[ifs.d.cols])
 		{
-			map_3d[infos.rows][infos.cols] = ft_atoi(infos.result[infos.cols]);
-			infos.cols++;
+			map_3d[ifs.d.rows][ifs.d.cols] = ft_atoi(ifs.result[ifs.d.cols]);
+			ifs.d.cols++;
 		}
-		free_split_n_line(infos);
-		infos.line = get_next_line(infos.fd);
-		infos.rows++;
+		free_split_n_line(ifs);
+		ifs.line = get_next_line(ifs.fd);
+		ifs.d.rows++;
 	}
-	free(infos.line);
-	close(infos.fd);
+	free(ifs.line);
+	close(ifs.fd);
 	return (map_3d);
 }
