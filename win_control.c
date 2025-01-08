@@ -48,11 +48,11 @@ int	handle_keypress(int keycode, t_data *data)
 	}
 	else if (keycode == UP_KEY)
 	{
-		data->angle_x -= 0.1; // Rotate left
+		data->angle_x += 0.1; // Rotate left
 	}
 	else if (keycode == DOWN_KEY)
 	{
-		data->angle_x += 0.1; // Rotate right
+		data->angle_x -= 0.1; // Rotate right
 	}
 	data->img = mlx_new_image(data->mlx, SC_WIDTH, SC_HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
