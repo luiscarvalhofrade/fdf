@@ -28,6 +28,12 @@
 # ifndef LEFT_KEY
 #  define LEFT_KEY 123
 # endif
+# ifndef UP_KEY
+#  define UP_KEY 126
+# endif
+# ifndef DOWN_KEY
+#  define DOWN_KEY 125
+# endif
 // # ifndef ESC_KEY
 // #  define ESC_KEY 65307
 // # endif
@@ -36,6 +42,12 @@
 // # endif
 // # ifndef LEFT_KEY
 // #  define LEFT_KEY 65361
+// # endif
+// # ifndef UP_KEY
+// #  define UP_KEY 65362
+// # endif
+// # ifndef DOWN_KEY
+// #  define DOWN_KEY 65364
 // # endif
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 5
@@ -63,7 +75,8 @@ typedef struct s_data
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-    double  angle;
+    double  angle_x;
+	double	angle_y;
     int     **matrix;
     t_r_c   dims;
 }				t_data;
@@ -115,12 +128,13 @@ void	draw_all_pts_n_lns(t_data data);
 
 t_list	*ft_find_last_node(t_list *list);
 
+t_3d_pt rotate_proj_x(t_3d_pt point, double angle);
 t_3d_pt	scale_proj(t_3d_pt point);
 
 t_2d_pt isometric_proj(t_3d_pt point);
 t_2d_pt	translate_proj(t_2d_pt point);
-t_2d_pt rotate_proj(t_2d_pt point, double angle);
-t_2d_pt	projection(t_3d_pt point, double angle);
+t_2d_pt rotate_proj_y(t_2d_pt point, double angle);
+t_2d_pt	projection(t_3d_pt point, double angle_y, double angle_x);
 
 t_r_c	num_rows_and_cols(char *map);
 

@@ -25,6 +25,8 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 int	handle_close(t_data *data)
 {
 	mlx_destroy_window(data->mlx, data->mlx_win);
+    mlx_destroy_image(data->mlx, data->img); // Destroy image before exiting
+    free(data);
 	exit(0);
 	return (0);
 }
@@ -38,18 +40,28 @@ int	handle_keypress(int keycode, t_data *data)
 	}
 	else if (keycode == RIGHT_KEY)
 	{
-		//mlx_destroy_image(data->mlx, data->img);
-		data->angle -= 0.1; // Rotate left
-        draw_all_pts_n_lns(*data);
-		mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
+		data->angle_y -= 0.1; // Rotate left
 	}
 	else if (keycode == LEFT_KEY)
 	{
-		//mlx_destroy_image(data->mlx, data->img);
-		data->angle += 0.1; // Rotate right
-        draw_all_pts_n_lns(*data);
-		mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
+		data->angle_y += 0.1; // Rotate right
 	}
+	else if (keycode == UP_KEY)
+	{
+		data->angle_x -= 0.1; // Rotate left
+	}
+	else if (keycode == DOWN_KEY)
+	{
+		data->angle_x += 0.1; // Rotate right
+	}
+	data->img = mlx_new_image(data->mlx, SC_WIDTH, SC_HEIGHT);
+	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
+			&data->line_length, &data->endian);
+    // Redraw the scene with the new angle
+    draw_all_pts_n_lns(*data); 
+
+    // Update the window with the new image
+    mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 	return (0);
 }
 
@@ -62,7 +74,8 @@ int	render_points(int **matrix, t_r_c dims)
 	data.img = mlx_new_image(data.mlx, SC_WIDTH, SC_HEIGHT);
 	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel, \
 			&data.line_length, &data.endian);
-	data.angle = 0.0;
+	data.angle_x = 0.0;
+	data.angle_y = 0.0;
 	data.matrix = matrix;
 	data.dims = dims;
 	draw_all_pts_n_lns(data);

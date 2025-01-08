@@ -17,8 +17,8 @@ void	draw_pt_n_ln(t_3d_pt pt3d_start, t_3d_pt pt3d_end, t_data data)
 	t_2d_pt	start;
 	t_2d_pt	end;
 
-	start = projection(pt3d_start, data.angle);
-	end = projection(pt3d_end, data.angle);
+	start = projection(pt3d_start, data.angle_y, data.angle_x);
+	end = projection(pt3d_end, data.angle_y, data.angle_x);
 	line_algo(&data, start, end, 0x00FF0000);
 }
 

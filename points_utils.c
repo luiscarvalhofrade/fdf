@@ -12,6 +12,21 @@
 
 #include "fdf.h"
 
+t_3d_pt rotate_proj_x(t_3d_pt point, double angle)
+{
+	double temp_y;
+    double temp_z;
+    // Apply rotation 
+     // Store intermediate values to avoid overwriting
+    temp_y = point.y * cos(angle) - point.z * sin(angle);
+    temp_z = point.y * sin(angle) + point.z * cos(angle);
+
+    // Assign updated values
+    point.y = temp_y;
+    point.z = temp_z;
+	return (point);
+}
+
 t_3d_pt	scale_proj(t_3d_pt point)
 {
 	int	scale;
@@ -45,9 +60,14 @@ t_2d_pt	translate_proj(t_2d_pt point)
 	return (point);
 }
 
-t_2d_pt rotate_proj(t_2d_pt point, double angle)
+t_2d_pt rotate_proj_y(t_2d_pt point, double angle)
 {
-	point.x = point.x * cos(angle) - point.y * sin(angle);
-	point.y = point.x * sin(angle) + point.y * cos(angle);
+	int	dx;
+	int	dy;
+
+	dx = point.x - SC_WIDTH / 2;
+	dy = point.y - SC_HEIGHT / 3;
+	point.x = dx * cos(angle) - dy * sin(angle) + SC_WIDTH / 2;
+	point.y = dx * sin(angle) + dy * cos(angle) + SC_HEIGHT / 3;
 	return (point);
 }
