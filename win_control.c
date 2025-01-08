@@ -38,22 +38,6 @@ int	handle_close(t_data *data)
 	return (0);
 }
 
-int	handle_esc_keypress(int keycode, t_data *data)
-{
-	if (keycode == ESC_KEY)
-	{
-		if (data->img)
-			mlx_destroy_image(data->mlx, data->img);
-		if (data->mlx_win)
-			mlx_destroy_window(data->mlx, data->mlx_win);
-		if (data->matrix)
-			free_matrix(data->matrix, data->dims.rows);
-		if (data->mlx)
-			free(data->mlx);
-	}
-	return (0);
-}
-
 int	handle_keypress(int keycode, t_data *data)
 {
 	if (keycode == ESC_KEY)
@@ -62,19 +46,16 @@ int	handle_keypress(int keycode, t_data *data)
 		exit(0);
 		return (0);
 	}
-	else if (keycode == RIGHT_KEY)
-		data->angle_y -= 0.1;
-	else if (keycode == LEFT_KEY)
-		data->angle_y += 0.1;
-	else if (keycode == UP_KEY)
-		data->angle_x += 0.1;
-	else if (keycode == DOWN_KEY)
-		data->angle_x -= 0.1;
-	data->img = mlx_new_image(data->mlx, SC_WIDTH, SC_HEIGHT);
-	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
-			&data->line_length, &data->endian);
-	draw_all_pts_n_lns(*data);
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
+	else if (keycode == RIGHT_KEY || keycode == LEFT_KEY)
+		hanle_rotation(keycode, data);
+	else if (keycode == UP_KEY || keycode == DOWN_KEY)
+		hanle_rotation(keycode, data);
+	else if (keycode == F1_KEY || keycode == F2_KEY)
+		handle_scale(keycode, data);
+	else if (keycode == F3_KEY || keycode == F4_KEY)
+		handle_translate_width(keycode, data);
+	else if (keycode == F5_KEY || keycode == F6_KEY)
+		handle_translate_height(keycode, data);
 	return (0);
 }
 
@@ -89,6 +70,9 @@ int	render_points(int **matrix, t_r_c dims)
 			&data.line_length, &data.endian);
 	data.angle_x = 0.0;
 	data.angle_y = 0.0;
+	data.scale = 10;
+	data.width_factor = 2;
+	data.height_factor = 3.0;
 	data.matrix = matrix;
 	data.dims = dims;
 	draw_all_pts_n_lns(data);

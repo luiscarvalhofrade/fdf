@@ -12,14 +12,14 @@
 
 #include "fdf.h"
 
-t_2d_pt	projection(t_3d_pt point, double angle_y, double angle_x)
+t_2d_pt	projection(t_3d_pt point, t_data data)
 {
 	t_2d_pt	converted;
 
-	point = rotate_proj_x(point, angle_x);
-	point = scale_proj(point);
+	point = rotate_proj_x(point, data);
+	point = scale_proj(point, data);
 	converted = isometric_proj(point);
-	converted = translate_proj(converted);
-	converted = rotate_proj_y(converted, angle_y);
+	converted = translate_proj(converted, data);
+	converted = rotate_proj_y(converted, data);
 	return (converted);
 }

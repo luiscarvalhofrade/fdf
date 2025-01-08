@@ -12,26 +12,23 @@
 
 #include "fdf.h"
 
-t_3d_pt	rotate_proj_x(t_3d_pt point, double angle)
+t_3d_pt	rotate_proj_x(t_3d_pt point, t_data data)
 {
 	double	temp_y;
 	double	temp_z;
 
-	temp_y = point.y * cos(angle) - point.z * sin(angle);
-	temp_z = point.y * sin(angle) + point.z * cos(angle);
+	temp_y = point.y * cos(data.angle_x) - point.z * sin(data.angle_x);
+	temp_z = point.y * sin(data.angle_x) + point.z * cos(data.angle_x);
 	point.y = temp_y;
 	point.z = temp_z;
 	return (point);
 }
 
-t_3d_pt	scale_proj(t_3d_pt point)
+t_3d_pt	scale_proj(t_3d_pt point, t_data data)
 {
-	int	scale;
-
-	scale = 10;
-	point.x = point.x * scale;
-	point.y = point.y * scale;
-	point.z = point.z * scale;
+	point.x = point.x * data.scale;
+	point.y = point.y * data.scale;
+	point.z = point.z * data.scale;
 	return (point);
 }
 
@@ -44,26 +41,22 @@ t_2d_pt	isometric_proj(t_3d_pt point)
 	return (projected);
 }
 
-t_2d_pt	translate_proj(t_2d_pt point)
+t_2d_pt	translate_proj(t_2d_pt point, t_data data)
 {
-	int	width_factor;
-	int	height_factor;
-
-	width_factor = 2;
-	height_factor = 3;
-	point.x = point.x + SC_WIDTH / width_factor;
-	point.y = point.y + SC_HEIGHT / height_factor;
+	point.x = point.x + SC_WIDTH / data.width_factor;
+	point.y = point.y + SC_HEIGHT / data.height_factor;
 	return (point);
 }
 
-t_2d_pt	rotate_proj_y(t_2d_pt point, double angle)
+t_2d_pt	rotate_proj_y(t_2d_pt point, t_data data)
 {
 	int	dx;
 	int	dy;
 
-	dx = point.x - SC_WIDTH / 2;
+	dx = point.x - SC_WIDTH / data.width_factor;
 	dy = point.y - SC_HEIGHT / 3;
-	point.x = dx * cos(angle) - dy * sin(angle) + SC_WIDTH / 2;
-	point.y = dx * sin(angle) + dy * cos(angle) + SC_HEIGHT / 3;
+	point.x = dx * cos(data.angle_y) - dy * \
+		sin(data.angle_y) + SC_WIDTH / data.width_factor;
+	point.y = dx * sin(data.angle_y) + dy * cos(data.angle_y) + SC_HEIGHT / 3;
 	return (point);
 }

@@ -49,6 +49,24 @@
 # ifndef DOWN_KEY
 #  define DOWN_KEY 65364
 # endif
+# ifndef F1_KEY
+#  define F1_KEY 65470
+# endif
+# ifndef F2_KEY
+#  define F2_KEY 65471
+# endif
+# ifndef F3_KEY
+#  define F3_KEY 65472
+# endif
+# ifndef F4_KEY
+#  define F4_KEY 65473
+# endif
+# ifndef F5_KEY
+#  define F5_KEY 65474
+# endif
+# ifndef F6_KEY
+#  define F6_KEY 65475
+# endif
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 5
 # endif
@@ -87,6 +105,9 @@ typedef struct s_data
 	double	angle_x;
 	double	angle_y;
 	int		**matrix;
+	int		scale;
+	double	width_factor;
+	double	height_factor;
 	t_r_c	dims;
 }				t_data;
 
@@ -134,6 +155,11 @@ int		ft_len_of_new_line(t_list *list);
 int		render_points(int **matrix, t_r_c dims);
 int		ft_count_items(const char *s, char c);
 int		ft_atoi(const char *nptr);
+int		handle_esc_keypress(int keycode, t_data *data);
+int		handle_scale(int keycode, t_data *data);
+int		hanle_rotation(int keycode, t_data *data);
+int		handle_translate_width(int keycode, t_data *data);
+int		handle_translate_height(int keycode, t_data *data);
 int		**create_matrix(char *map);
 int		**convert_map_matrix(char *map);
 
@@ -147,13 +173,13 @@ void	free_matrix(int **matrix, int size);
 
 t_list	*ft_find_last_node(t_list *list);
 
-t_3d_pt	rotate_proj_x(t_3d_pt point, double angle);
-t_3d_pt	scale_proj(t_3d_pt point);
+t_3d_pt	rotate_proj_x(t_3d_pt point, t_data data);
+t_3d_pt	scale_proj(t_3d_pt point, t_data data);
 
 t_2d_pt	isometric_proj(t_3d_pt point);
-t_2d_pt	translate_proj(t_2d_pt point);
-t_2d_pt	rotate_proj_y(t_2d_pt point, double angle);
-t_2d_pt	projection(t_3d_pt point, double angle_y, double angle_x);
+t_2d_pt	translate_proj(t_2d_pt point, t_data data);
+t_2d_pt	rotate_proj_y(t_2d_pt point, t_data data);
+t_2d_pt	projection(t_3d_pt point, t_data data);
 
 t_r_c	num_rows_and_cols(char *map);
 
