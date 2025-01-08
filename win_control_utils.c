@@ -34,6 +34,8 @@ int	handle_scale(int keycode, t_data *data)
 		data->scale += 1;
 	else if (keycode == F2_KEY)
 		data->scale -= 1;
+	if (data->img)
+			mlx_destroy_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, SC_WIDTH, SC_HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
 			&data->line_length, &data->endian);
@@ -48,6 +50,8 @@ int	handle_translate_width(int keycode, t_data *data)
 		data->width_factor += 0.2;
 	else if (keycode == F4_KEY)
 		data->width_factor -= 0.2;
+	if (data->img)
+			mlx_destroy_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, SC_WIDTH, SC_HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
 			&data->line_length, &data->endian);
@@ -62,6 +66,8 @@ int	handle_translate_height(int keycode, t_data *data)
 		data->height_factor += 0.2;
 	else if (keycode == F6_KEY)
 		data->height_factor -= 0.2;
+	if (data->img)
+			mlx_destroy_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, SC_WIDTH, SC_HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
 			&data->line_length, &data->endian);
@@ -80,6 +86,8 @@ int	hanle_rotation(int keycode, t_data *data)
 		data->angle_x += 0.1;
 	else if (keycode == DOWN_KEY)
 		data->angle_x -= 0.1;
+	if (data->img)
+			mlx_destroy_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, SC_WIDTH, SC_HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
 			&data->line_length, &data->endian);
