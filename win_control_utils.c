@@ -12,22 +12,6 @@
 
 #include "fdf.h"
 
-int	handle_esc_keypress(int keycode, t_data *data)
-{
-	if (keycode == ESC_KEY)
-	{
-		if (data->img)
-			mlx_destroy_image(data->mlx, data->img);
-		if (data->mlx_win)
-			mlx_destroy_window(data->mlx, data->mlx_win);
-		if (data->matrix)
-			free_matrix(data->matrix, data->dims.rows);
-		if (data->mlx)
-			mlx_destroy_display(data->mlx);
-	}
-	return (0);
-}
-
 int	handle_scale(int keycode, t_data *data)
 {
 	if (keycode == F1_KEY)
@@ -35,7 +19,7 @@ int	handle_scale(int keycode, t_data *data)
 	else if (keycode == F2_KEY)
 		data->scale -= 1;
 	if (data->img)
-			mlx_destroy_image(data->mlx, data->img);
+		mlx_destroy_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, SC_WIDTH, SC_HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
 			&data->line_length, &data->endian);
@@ -51,7 +35,7 @@ int	handle_translate_width(int keycode, t_data *data)
 	else if (keycode == F4_KEY)
 		data->width_factor -= 0.2;
 	if (data->img)
-			mlx_destroy_image(data->mlx, data->img);
+		mlx_destroy_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, SC_WIDTH, SC_HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
 			&data->line_length, &data->endian);
@@ -67,7 +51,7 @@ int	handle_translate_height(int keycode, t_data *data)
 	else if (keycode == F6_KEY)
 		data->height_factor -= 0.2;
 	if (data->img)
-			mlx_destroy_image(data->mlx, data->img);
+		mlx_destroy_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, SC_WIDTH, SC_HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
 			&data->line_length, &data->endian);
@@ -87,7 +71,7 @@ int	hanle_rotation(int keycode, t_data *data)
 	else if (keycode == DOWN_KEY)
 		data->angle_x -= 0.1;
 	if (data->img)
-			mlx_destroy_image(data->mlx, data->img);
+		mlx_destroy_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, SC_WIDTH, SC_HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
 			&data->line_length, &data->endian);
@@ -103,7 +87,7 @@ int	handle_descale_z(int keycode, t_data *data)
 	else if (keycode == F8_KEY)
 		data->z_value += 0.1;
 	if (data->img)
-			mlx_destroy_image(data->mlx, data->img);
+		mlx_destroy_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, SC_WIDTH, SC_HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
 			&data->line_length, &data->endian);

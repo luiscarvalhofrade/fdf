@@ -22,6 +22,22 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+int	handle_esc_keypress(int keycode, t_data *data)
+{
+	if (keycode == ESC_KEY)
+	{
+		if (data->img)
+			mlx_destroy_image(data->mlx, data->img);
+		if (data->mlx_win)
+			mlx_destroy_window(data->mlx, data->mlx_win);
+		if (data->matrix)
+			free_matrix(data->matrix, data->dims.rows);
+		if (data->mlx)
+			mlx_destroy_display(data->mlx);
+	}
+	return (0);
+}
+
 int	handle_close(t_data *data)
 {
 	if (data->img)
